@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ray.study.weixin.common.config.WeiXinCommonConfiguration

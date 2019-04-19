@@ -1,0 +1,14 @@
+dependencies {
+    compile group: 'org.apache.directory.studio', name: 'org.apache.commons.codec', version: '1.8'
+}
+
+bootJar {
+    baseName = 'weixin-common-boot'
+    enabled = true
+}
+
+jar {
+    baseName = 'weixin-common'
+    enabled = true
+}
+

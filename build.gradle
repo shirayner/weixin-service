@@ -1,0 +1,90 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.1.RELEASE'
+    }
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+//配置所有项目
+allprojects {
+    //公共插件插件
+    apply plugin: 'java'
+
+    //公共属性
+    group = 'com.ray.study'
+    version = '0.0.1-SNAPSHOT'
+
+    //编译属性
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+}
+
+//构建依赖
+subprojects {
+
+    //应用插件
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        implementation 'org.springframework.boot:spring-boot-starter-aop'
+        implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+        // 4.lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        // 5. fastJson
+        implementation 'com.alibaba:fastjson:1.2.46'
+
+        //6. Redis
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+        //7.Quartz
+        implementation 'org.springframework.boot:spring-boot-starter-quartz'
+
+        //8.guava
+        implementation 'com.google.guava:guava:24.0-jre'
+
+        //9. joda-time
+        implementation 'joda-time:joda-time:2.9.9'
+
+        //10. xml 解析
+        implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
+        implementation group: 'org.dom4j', name: 'dom4j', version: '2.1.0'
+
+        //11. 使用Swagger2构建强大的RESTful API文档
+        implementation 'io.springfox:springfox-swagger2:2.9.2'
+        implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
+
+        implementation  'io.projectreactor:reactor-core:3.1.5.RELEASE'
+
+
+    }
+}
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+}
+

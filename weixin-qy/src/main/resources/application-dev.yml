@@ -1,0 +1,27 @@
+server:
+  port: 8088
+  servlet:
+   context-path: /weixin-qy
+
+
+#企业微信配置
+weixin:
+    qy:
+       corpId: ww92f5da92bb24696e
+       contactsSecret: 1m_9XP62YrXjSiYtL5Thba7DRUarqaExKfr_5eAL09w
+       agent:
+        - agentId: 1000002
+          agentSecret: I73733veH3uCs6H_ijPvIjYD4Rese5UlbYhhQOEE1-I
+          token: ray
+          encodingAesKey: z2W9lyOAR1XjY8mopEmiSqib0TlBZzCFiCLp6IdS2Iv
+          state: ray
+        - agentId: 1000003
+          agentSecret: gcGhoOnBWOsyN0mz1TrcUQmO7X71YSv4Ma_TW0F9ilM
+          token: weixin
+          encodingAesKey: YVbcm1g1ynErRKLeugtsr88VlK7ukpkPZHQJICz6SFQ
+          state: hecGroup
+
+
+spring:
+  thymeleaf:
+    cache: false

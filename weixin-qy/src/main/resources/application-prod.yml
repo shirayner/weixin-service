@@ -1,0 +1,21 @@
+debug: true
+server:
+  port: 9090
+spring:
+  thymeleaf:
+    encoding: UTF-8
+    # 热部署静态文件
+    cache: false
+    # 使用HTML5标准
+    mode: HTML5
+
+#微信公众平台配置
+weixin:
+    qy:
+       corpId: ww92f5da92bb24696e
+       agentSecret: I73733veH3uCs6H_ijPvIjYD4Rese5UlbYhhQOEE1-I
+       contactsSecret: 1m_9XP62YrXjSiYtL5Thba7DRUarqaExKfr_5eAL09w
+       agentId: 1000002
+       token: ray
+       encodingAesKey: z2W9lyOAR1XjY8mopEmiSqib0TlBZzCFiCLp6IdS2Iv
+

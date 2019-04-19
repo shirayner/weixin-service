@@ -1,0 +1,23 @@
+package com.ray.study.weixin.qy.vo.message.notice;
+
+import com.ray.study.weixin.qy.vo.BaseVO;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+/**
+ * @desc
+ *
+ * @author rui.shi@hand-china.com
+ * @date 2018/10/15
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+public class MediaVO  extends BaseVO {
+	private String userId;
+
+	private String mediaId;
+
+
+}

@@ -1,0 +1,3 @@
+rootProject.name = 'weixin-service'
+include 'weixin-common'
+include 'weixin-qy'
