@@ -8,7 +8,7 @@ import com.ray.study.weixin.common.http.ServerResponse;
 import com.ray.study.weixin.common.service.AuthService;
 import com.ray.study.weixin.common.vo.JsSdkConfigVO;
 import com.ray.study.weixin.qy.AgentAuthConfig;
-import com.ray.study.weixin.qy.cash.WeiXinTokenCashHelper;
+import com.ray.study.weixin.qy.cache.WeiXinTokenCacheHelper;
 import com.ray.study.weixin.qy.config.WeiXinQYAuthConfig;
 import com.ray.study.weixin.qy.util.AgentAuthConfigLocalHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 	HttpHelper httpHelper;
 
     @Autowired
-    private WeiXinTokenCashHelper tokenCashHelper;
+    private WeiXinTokenCacheHelper tokenCacheHelper;
 
     /** 1.获取access_token的接口地址,有效期为7200秒 */
     private static final String GET_ACCESS_TOKEN_URL= WeiXinCons.API_GATEWAY_QY+"/cgi-bin/gettoken?corpid=";
@@ -62,9 +62,9 @@ public class AuthServiceImpl implements AuthService {
         String accessToken ;
 
         //1.先从缓存中获取accessToken
-        if (tokenCashHelper.hasAccessToken(state) ) {
+        if (tokenCacheHelper.hasAccessToken(state) ) {
             log.debug("Redis has data");
-            accessToken = tokenCashHelper.getAccessToken(state);
+            accessToken = tokenCacheHelper.getAccessToken(state);
         } else {
             log.debug("Redis don't has data");
             // 2.缓存没有，再调用服务接口来获取
@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
             log.debug("============accessToken:  "+accessToken);
 
             // 2.2 数据写入缓存
-			tokenCashHelper.addAccessToken(state, accessToken);
+			tokenCacheHelper.addAccessToken(state, accessToken);
         }
 
         return accessToken;
@@ -95,16 +95,16 @@ public class AuthServiceImpl implements AuthService {
     public String getContactsAccessToken(){
         String contactsAccessToken ;
 
-		if (tokenCashHelper.hasContactsAccessToken()) {
+		if (tokenCacheHelper.hasContactsAccessToken()) {
             log.debug("Redis has data");
-            contactsAccessToken = tokenCashHelper.getContactsAccessToken();
+            contactsAccessToken = tokenCacheHelper.getContactsAccessToken();
         } else {
             log.info("Redis don't has data");
             contactsAccessToken=doGetContactsAccessToken().getString(WeiXinCons.KEY_ACCESS_TOKEN);
 
             log.debug("============contactsAccessToken:  "+contactsAccessToken);
 
-			tokenCashHelper.addContactsAccessToken(contactsAccessToken);
+			tokenCacheHelper.addContactsAccessToken(contactsAccessToken);
         }
 
         return contactsAccessToken;
@@ -128,9 +128,9 @@ public class AuthServiceImpl implements AuthService {
 		String jsApiTicket;
 
         //1.先从缓存中获取accessToken
-        if (tokenCashHelper.hasJsApiTicket(state)) {
+        if (tokenCacheHelper.hasJsApiTicket(state)) {
             log.debug("Redis has data");
-            jsApiTicket = tokenCashHelper.getJsApiTicket(state);
+            jsApiTicket = tokenCacheHelper.getJsApiTicket(state);
         } else {
             log.info("Redis don't has data");
             // 2.缓存没有，再调用服务接口来获取
@@ -140,7 +140,7 @@ public class AuthServiceImpl implements AuthService {
             log.debug("============jsApiTicket:  "+jsApiTicket);
 
             // 2.2 数据写入缓存
-			tokenCashHelper.addJsApiTicket(state, jsApiTicket);
+			tokenCacheHelper.addJsApiTicket(state, jsApiTicket);
         }
 
         return jsApiTicket;
@@ -266,22 +266,22 @@ public class AuthServiceImpl implements AuthService {
 		for(AgentAuthConfig  agentAuthConfig : agentAuthConfigList){
 			String state = agentAuthConfig.getState();
 			String agentSecret = agentAuthConfig.getAgentSecret();
-			cashToken(state, agentSecret);
+            cacheToken(state, agentSecret);
 		}
 
 		log.debug("Token Sync Job. End！");
 
     }
 
-    private void cashToken(String state, String agentSecret){
+    private void cacheToken(String state, String agentSecret){
 		// 1.调用服务获取 token
 		String accessToken=doGetAccessToken(agentSecret).getString(WeiXinCons.KEY_ACCESS_TOKEN);
 		String contactsAccessToken=doGetContactsAccessToken().getString(WeiXinCons.KEY_ACCESS_TOKEN);
 		String jsApiTicket=doGetJsApiTicket(accessToken).getString(WeiXinCons.KEY_TICKET);
 
-		tokenCashHelper.addAccessToken(state, accessToken);
-		tokenCashHelper.addContactsAccessToken(contactsAccessToken);
-		tokenCashHelper.addJsApiTicket(state, jsApiTicket);
+		tokenCacheHelper.addAccessToken(state, accessToken);
+		tokenCacheHelper.addContactsAccessToken(contactsAccessToken);
+		tokenCacheHelper.addJsApiTicket(state, jsApiTicket);
 
 		log.debug("============accessToken============:{}",accessToken);
 		log.debug("============contactsAccessToken====:{}",contactsAccessToken);

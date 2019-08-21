@@ -1,4 +1,4 @@
-package com.ray.study.weixin.qy.cash;
+package com.ray.study.weixin.qy.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
@@ -20,7 +20,7 @@ import static com.ray.study.weixin.common.constant.RedisCons.*;
  */
 
 @Component
-public class WeiXinTokenCashHelper  {
+public class WeiXinTokenCacheHelper {
 
 	@Autowired
 	private RedisTemplate redisTemplate;
