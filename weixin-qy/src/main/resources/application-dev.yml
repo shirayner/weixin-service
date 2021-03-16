@@ -7,15 +7,15 @@ server:
 #企业微信配置
 weixin:
     qy:
-       corpId: ww92f5da92bb24696e
-       contactsSecret: 1m_9XP62YrXjSiYtL5Thba7DRUarqaExKfr_5eAL09w
+       corpId: ww92f5da92bb24696e  #企业ID
+       contactsSecret: 1m_9XP62YrXjSiYtL5Thba7DRUarqaExKfr_5eAL09w  #通讯录秘钥
        agent:
-        - agentId: 1000002
-          agentSecret: I73733veH3uCs6H_ijPvIjYD4Rese5UlbYhhQOEE1-I
-          token: ray
-          encodingAesKey: z2W9lyOAR1XjY8mopEmiSqib0TlBZzCFiCLp6IdS2Iv
-          state: ray
-        - agentId: 1000003
+        - agentId: 1000002  #应用ID
+          agentSecret: I73733veH3uCs6H_ijPvIjYD4Rese5UlbYhhQOEE1-I  #应用秘钥
+          token: ray             #接收消息服务器配置-Token
+          encodingAesKey: z2W9lyOAR1XjY8mopEmiSqib0TlBZzCFiCLp6IdS2Iv   #接收消息服务器配置-EncodingAESKey
+          state: ray   # 任意定义
+        - agentId: 1000003  # 如果有多个应用就配置多个
           agentSecret: gcGhoOnBWOsyN0mz1TrcUQmO7X71YSv4Ma_TW0F9ilM
           token: weixin
           encodingAesKey: YVbcm1g1ynErRKLeugtsr88VlK7ukpkPZHQJICz6SFQ
